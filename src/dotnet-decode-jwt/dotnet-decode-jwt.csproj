@@ -6,7 +6,7 @@
     <PackAsTool>true</PackAsTool>
     <PackageId>dotnet-decode-jwt</PackageId>
     <Authors>Gabriel Weyer</Authors>
-    <PackageDescription>Decode a JSON Web Token Claims.</PackageDescription>
+    <PackageDescription>Decode a JSON Web Token claims.</PackageDescription>
     <PackageTags>JWT</PackageTags>
     <PackageProjectUrl>https://github.com/gabrielweyer/dotnet-decode-jwt</PackageProjectUrl>
     <Copyright>Copyright © Decode JWT contributors</Copyright>

@@ -21,6 +21,7 @@ skip_commits:
     - .editorconfig
     - LICENSE
     - README.md
+    - docs/*
 deploy:
   # The provider is case sensitive
   - provider: GitHub
