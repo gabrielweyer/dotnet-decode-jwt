@@ -16,7 +16,7 @@ namespace DotNet.Decode.Jwt.Tests
         {
             _console = new MockConsole();
 
-            _target = new ClaimsDisplayer(_console);
+            _target = new ClaimsDisplayer(_console, TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time"));
         }
 
         [Fact]

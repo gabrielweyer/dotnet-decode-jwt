@@ -7,16 +7,18 @@ namespace DotNet.Decode.Jwt
     public class ClaimsDisplayer
     {
         private readonly IConsole _console;
+        private readonly TimeZoneInfo _localTimeZone;
 
         private const string ExpirationTimeKeyName = "exp";
         private const string NotBeforeKeyName = "nbf";
         private const string IssuedAtKeyName = "iat";
 
-        private static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        public ClaimsDisplayer(IConsole console)
+        public ClaimsDisplayer(IConsole console, TimeZoneInfo localTimeZone)
         {
             _console = console;
+            _localTimeZone = localTimeZone;
         }
 
         public void DisplayClaims(JObject claims)
@@ -50,18 +52,17 @@ namespace DotNet.Decode.Jwt
             }
         }
 
-        private static string FormatDateTime(JObject claims, string key)
+        private string FormatDateTime(JObject claims, string key)
         {
             if (!claims.TryGetValue(key, out var token)) return "N/A";
 
             var timestamp = token.Value<int>();
 
-            var utcTime = epoch.AddSeconds(timestamp);
+            var utcTime = Epoch.AddSeconds(timestamp);
 
-            var timeZone = TimeZoneInfo.Local;
-            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, timeZone);
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, _localTimeZone);
 
-            return $"{FormatDateTime(utcTime)} UTC / {FormatDateTime(localTime)} {timeZone.DisplayName}";
+            return $"{FormatDateTime(utcTime)} UTC / {FormatDateTime(localTime)} {_localTimeZone.DisplayName}";
         }
 
         private static string FormatDateTime(DateTime date)

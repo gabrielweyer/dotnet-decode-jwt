@@ -14,7 +14,7 @@ namespace DotNet.Decode.Jwt
             }
 
             var console = new SimplifiedConsole();
-            var claimsDisplayer = new ClaimsDisplayer(console);
+            var claimsDisplayer = new ClaimsDisplayer(console, TimeZoneInfo.Local);
 
             try
             {
