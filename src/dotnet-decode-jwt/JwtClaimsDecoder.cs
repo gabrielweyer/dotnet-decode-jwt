@@ -13,7 +13,7 @@ namespace DotNet.Decode.Jwt
         public static IDictionary<string, string> GetClaims(string jwt)
         {
             var base64UrlClaimsSet = GetBase64UrlClaimsSet(jwt);
-            var base64ClaimsSet = ConvertToBase64(base64UrlClaimsSet);
+            var base64ClaimsSet = DecodeBase64Url(base64UrlClaimsSet);
 
             return DeserializeClaims(base64ClaimsSet);
         }
@@ -101,10 +101,14 @@ namespace DotNet.Decode.Jwt
             return claims;
         }
 
-        private static byte[] ConvertToBase64(string base64Url)
+        private static byte[] DecodeBase64Url(string base64Url)
         {
-            var base64ClaimsSet = base64Url.PadRight(base64Url.Length + (4 - base64Url.Length % 4) % 4, '=');
-            return Convert.FromBase64String(base64ClaimsSet);
+            var base64 = base64Url.Replace('-', '+');
+            base64 = base64.Replace('_', '/');
+
+            base64 = base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
+
+            return Convert.FromBase64String(base64);
         }
 
         private static bool IsItem(string name)
