@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -10,10 +11,6 @@ namespace DotNet.Decode.Jwt.Tests
         private readonly ClaimsDisplayer _target;
 
         private readonly MockConsole _console;
-
-        private const int ClaimsIndex = 3;
-        private const int ExpectedLineCountWhenClaims = 5;
-        private const int ExpectedLineCountWhenNoClaims = 3;
 
         public ClaimsDisplayerTests()
         {
@@ -35,10 +32,14 @@ namespace DotNet.Decode.Jwt.Tests
 
             // Assert
 
-            Assert.Equal(ExpectedLineCountWhenNoClaims, _console.Actions.Count);
-            Assert.Equal("SET FOREGROUND COLOR: DarkGray", _console.Actions[0]);
-            Assert.Equal("WRITE: There was no claims in the JWT.", _console.Actions[1]);
-            Assert.Equal("RESET COLOR", _console.Actions[2]);
+            var expected = new List<string>
+            {
+                "SET FOREGROUND COLOR: DarkGray",
+                "WRITE: There was no claims in the JWT.",
+                "RESET COLOR"
+            };
+
+            _console.Actions.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -58,12 +59,23 @@ namespace DotNet.Decode.Jwt.Tests
 
             // Assert
 
-            Assert.Equal(ExpectedLineCountWhenClaims, _console.Actions.Count);
-            Assert.Equal("SET FOREGROUND COLOR: Green", _console.Actions[0]);
-            Assert.Equal("WRITE: Claims are:", _console.Actions[1]);
-            Assert.Equal("RESET COLOR", _console.Actions[2]);
-            Assert.Equal("WRITE: {\r\n  \"iat\": 1516239022\r\n}", _console.Actions[ClaimsIndex]);
-            Assert.Equal("RESET COLOR", _console.Actions[4]);
+            var expected = new List<string>
+            {
+                "WRITE: ",
+                "SET FOREGROUND COLOR: Yellow",
+                "WRITE: Expiration Time (exp): N/A",
+                "WRITE: Not Before (nbf): N/A",
+                "WRITE: Issued At (iat): Thursday, 18 January 2018 01:30:22 UTC / Thursday, 18 January 2018 12:30:22 (UTC+10:00) Canberra, Melbourne, Sydney",
+                "SET FOREGROUND COLOR: Green",
+                "WRITE: ",
+                "WRITE: Claims are:",
+                "WRITE: ",
+                "RESET COLOR",
+                "WRITE: {\r\n  \"iat\": 1516239022\r\n}",
+                "RESET COLOR"
+            };
+
+            _console.Actions.Should().BeEquivalentTo(expected);
         }
     }
 
