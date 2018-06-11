@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -17,6 +18,14 @@ namespace DotNet.Decode.Jwt.Tests
             _console = new MockConsole();
 
             _target = new ClaimsDisplayer(_console, TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time"));
+        }
+
+        static ClaimsDisplayerTests()
+        {
+            var cultureInfo = new CultureInfo("en-AU");
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
         }
 
         [Fact]
