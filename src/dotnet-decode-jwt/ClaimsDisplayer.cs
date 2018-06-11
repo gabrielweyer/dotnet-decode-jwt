@@ -1,21 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DotNet.Decode.Jwt
 {
     public class ClaimsDisplayer
     {
         private readonly IConsole _console;
+        private readonly TimeZoneInfo _localTimeZone;
 
-        private static readonly IReadOnlyList<string> DateClaims = new List<string> { "exp", "nbf", "iat"};
+        private const string ExpirationTimeKeyName = "exp";
+        private const string NotBeforeKeyName = "nbf";
+        private const string IssuedAtKeyName = "iat";
 
-        public ClaimsDisplayer(IConsole console)
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public ClaimsDisplayer(IConsole console, TimeZoneInfo localTimeZone)
         {
             _console = console;
+            _localTimeZone = localTimeZone;
         }
 
-        public void DisplayClaims(IDictionary<string, string> claims)
+        public void DisplayClaims(JObject claims)
         {
             try
             {
@@ -26,23 +32,18 @@ namespace DotNet.Decode.Jwt
                 }
                 else
                 {
+                    _console.WriteLine(string.Empty);
+                    _console.ForegroundColor = ConsoleColor.Yellow;
+                    _console.WriteLine($"Expiration Time ({ExpirationTimeKeyName}): {FormatDateTime(claims, ExpirationTimeKeyName)}");
+                    _console.WriteLine($"Not Before ({NotBeforeKeyName}): {FormatDateTime(claims, NotBeforeKeyName)}");
+                    _console.WriteLine($"Issued At ({IssuedAtKeyName}): {FormatDateTime(claims, IssuedAtKeyName)}");
                     _console.ForegroundColor = ConsoleColor.Green;
+                    _console.WriteLine(string.Empty);
                     _console.WriteLine("Claims are:");
+                    _console.WriteLine(string.Empty);
                     _console.ResetColor();
-                    _console.WriteLine("{");
 
-                    var fieldSeparator = ",";
-                    var index = 1;
-
-                    foreach (var claim in claims)
-                    {
-                        if (index == claims.Count) { fieldSeparator = string.Empty; }
-
-                        _console.WriteLine($"\t\"{claim.Key}\": {GetFormattedValue(claim.Key, claim.Value)}{fieldSeparator}");
-                        index++;
-                    }
-
-                    _console.WriteLine("}");
+                    _console.WriteLine(JsonConvert.SerializeObject(claims, Formatting.Indented));
                 }
             }
             finally
@@ -51,9 +52,22 @@ namespace DotNet.Decode.Jwt
             }
         }
 
-        private static string GetFormattedValue(string key, string value)
+        private string FormatDateTime(JObject claims, string key)
         {
-            return DateClaims.Contains(key) || value[0] == '[' ? value : $"\"{value}\"";
+            if (!claims.TryGetValue(key, out var token)) return "N/A";
+
+            var timestamp = token.Value<int>();
+
+            var utcTime = Epoch.AddSeconds(timestamp);
+
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, _localTimeZone);
+
+            return $"{FormatDateTime(utcTime)} UTC / {FormatDateTime(localTime)} {_localTimeZone.DisplayName}";
+        }
+
+        private static string FormatDateTime(DateTime date)
+        {
+            return $"{date.ToLongDateString()} {date:HH:mm:ss}";
         }
     }
 }

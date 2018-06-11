@@ -78,7 +78,7 @@ Task("Test")
             NoBuild = true
         };
 
-        GetFiles("./tests/*/*Tests.csproj")
+        GetFiles("./tests/*/*-tests.csproj")
             .ToList()
             .ForEach(f => DotNetCoreTest(f.FullPath, settings));
     });
