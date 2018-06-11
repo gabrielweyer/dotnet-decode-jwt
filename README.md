@@ -15,10 +15,10 @@
 ## Installation
 
 ```posh
-dotnet tool install -g dotnet-decode-jwt
+> dotnet tool install -g dotnet-decode-jwt
 ```
 
-## Invoke the global tool
+## Usage
 
 ```posh
 > dotnet decode-jwt eyJhbGciOiJub25lIn0.ewogICAgImlzcyI6ICJiZXN0LWlzc3VlciIsCiAgICAic3ViIjogIm5pY2Utc3ViamVjdCIsCiAgICAiYXVkIjogWyJhdWRpZW5jZS1vbmUiLCAiYXVkaWVuY2UtdHdvIl0sCiAgICAiZXhwIjogMTUyODY5MTM1MCwKICAgICJuYmYiOiAxNTI4NjkwNzUwLAogICAgImlhdCI6IDE1Mjg2OTA3NTAsCiAgICAianRpIjogImMzMTk3ZGNiLWUxMTMtNDc3OC04OTc5LWI5NTZmNjg0MDA3ZiIsCiAgICAiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjogImhpQG1lLmNvbSIsCiAgICAic29tZS1udW1iZXIiOiAxMi41NiwKICAgICJuZXN0ZWQtY2xhaW0iOiB7CiAgICAgICAgImhpIjogIkknbSIsCiAgICAgICAgImEiOiAibmVzdGVkIGNsYWltIgogICAgfQp9Cg==.
@@ -54,5 +54,5 @@ Claims are:
 [myget-tool-badge]: https://img.shields.io/myget/gabrielweyer-pre-release/v/dotnet-decode-jwt.svg?label=MyGet&style=flat-square
 [myget-tool-command]: https://www.myget.org/feed/gabrielweyer-pre-release/package/nuget/dotnet-decode-jwt
 [app-veyor]: https://ci.appveyor.com/project/GabrielWeyer/dotnet-decode-jwt
-[app-veyor-shield]: https://img.shields.io/appveyor/ci/gabrielweyer/dotnet-decode-jwt/master.svg?label=Appveyor&style=flat-square
+[app-veyor-shield]: https://img.shields.io/appveyor/ci/gabrielweyer/dotnet-decode-jwt/master.svg?label=AppVeyor&style=flat-square
 [dotnet-global-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools
