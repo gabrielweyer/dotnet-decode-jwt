@@ -11,4 +11,7 @@
     <PackageProjectUrl>https://github.com/gabrielweyer/dotnet-decode-jwt</PackageProjectUrl>
     <Copyright>Copyright © Decode JWT contributors</Copyright>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
 </Project>

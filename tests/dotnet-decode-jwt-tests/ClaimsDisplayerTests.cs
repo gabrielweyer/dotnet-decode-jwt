@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace DotNet.Decode.Jwt.Tests
@@ -9,6 +10,10 @@ namespace DotNet.Decode.Jwt.Tests
         private readonly ClaimsDisplayer _target;
 
         private readonly MockConsole _console;
+
+        private const int ClaimsIndex = 3;
+        private const int ExpectedLineCountWhenClaims = 5;
+        private const int ExpectedLineCountWhenNoClaims = 3;
 
         public ClaimsDisplayerTests()
         {
@@ -22,7 +27,7 @@ namespace DotNet.Decode.Jwt.Tests
         {
             // Arrange
 
-            var claims = new Dictionary<string, string>();
+            var claims = new JObject();
 
             // Act
 
@@ -30,21 +35,22 @@ namespace DotNet.Decode.Jwt.Tests
 
             // Assert
 
-            Assert.Equal(3, _console.Actions.Count);
+            Assert.Equal(ExpectedLineCountWhenNoClaims, _console.Actions.Count);
             Assert.Equal("SET FOREGROUND COLOR: DarkGray", _console.Actions[0]);
             Assert.Equal("WRITE: There was no claims in the JWT.", _console.Actions[1]);
             Assert.Equal("RESET COLOR", _console.Actions[2]);
         }
 
         [Fact]
-        public void GivenAtLeastOneClaim_WhenDisplayClaims_ThenOpeningAndClosingBraces()
+        public void GivenAnyClaim_WhenDisplayClaims_ThenDisplayClaims()
         {
             // Arrange
 
-            var claims = new Dictionary<string, string>
+            var claims = JObject.Parse(@"
             {
-                {"name", "John Doe"}
-            };
+                'iat': 1516239022
+            }
+            ");
 
             // Act
 
@@ -52,75 +58,12 @@ namespace DotNet.Decode.Jwt.Tests
 
             // Assert
 
-            Assert.Equal(7, _console.Actions.Count);
-            Assert.Equal("WRITE: {", _console.Actions[3]);
-            Assert.Equal("WRITE: }", _console.Actions[5]);
-        }
-
-        [Fact]
-        public void GivenLastClaim_WhenDisplayClaims_ThenNoTrailingComma()
-        {
-            // Arrange
-
-            var claims = new Dictionary<string, string>
-            {
-                {"name", "John Doe"}
-            };
-
-            // Act
-
-            _target.DisplayClaims(claims);
-
-            // Assert
-
-            Assert.Equal(7, _console.Actions.Count);
-            Assert.Equal("WRITE: {", _console.Actions[3]);
-            Assert.Equal("WRITE: \t\"name\": \"John Doe\"", _console.Actions[4]);
-            Assert.Equal("WRITE: }", _console.Actions[5]);
-        }
-
-        [Fact]
-        public void GivenIatClaim_WhenDisplayClaims_ThenDisplayIatAsNumber()
-        {
-            // Arrange
-
-            var claims = new Dictionary<string, string>
-            {
-                {"iat", "1516239022"}
-            };
-
-            // Act
-
-            _target.DisplayClaims(claims);
-
-            // Assert
-
-            Assert.Equal(7, _console.Actions.Count);
-            Assert.Equal("WRITE: {", _console.Actions[3]);
-            Assert.Equal("WRITE: \t\"iat\": 1516239022", _console.Actions[4]);
-            Assert.Equal("WRITE: }", _console.Actions[5]);
-        }
-
-        [Fact]
-        public void GivenArrayClaim_WhenDisplayClaims_ThenDisplayClaimAsArray()
-        {
-            // Arrange
-
-            var claims = new Dictionary<string, string>
-            {
-                {"aud", "[\"audience-one\",\"audience-two\"]"}
-            };
-
-            // Act
-
-            _target.DisplayClaims(claims);
-
-            // Assert
-
-            Assert.Equal(7, _console.Actions.Count);
-            Assert.Equal("WRITE: {", _console.Actions[3]);
-            Assert.Equal("WRITE: \t\"aud\": [\"audience-one\",\"audience-two\"]", _console.Actions[4]);
-            Assert.Equal("WRITE: }", _console.Actions[5]);
+            Assert.Equal(ExpectedLineCountWhenClaims, _console.Actions.Count);
+            Assert.Equal("SET FOREGROUND COLOR: Green", _console.Actions[0]);
+            Assert.Equal("WRITE: Claims are:", _console.Actions[1]);
+            Assert.Equal("RESET COLOR", _console.Actions[2]);
+            Assert.Equal("WRITE: {\r\n  \"iat\": 1516239022\r\n}", _console.Actions[ClaimsIndex]);
+            Assert.Equal("RESET COLOR", _console.Actions[4]);
         }
     }
 

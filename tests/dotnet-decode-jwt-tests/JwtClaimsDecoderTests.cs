@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace DotNet.Decode.Jwt.Tests
@@ -29,7 +29,7 @@ namespace DotNet.Decode.Jwt.Tests
         {
             // Act
 
-            var exception = Record.Exception(() => JwtClaimsDecoder.GetClaims("cQ==.invalid-base-64.cQ=="));
+            var exception = Record.Exception(() => JwtClaimsDecoder.GetClaims("cQ==.invalid|base|64.cQ=="));
 
             // Assert
 
@@ -46,7 +46,6 @@ namespace DotNet.Decode.Jwt.Tests
             // Assert
 
             Assert.IsType<FormatException>(exception);
-            Assert.Equal("The claims set is not valid JSON: q.", exception.Message);
         }
 
         [Fact]
@@ -62,18 +61,19 @@ namespace DotNet.Decode.Jwt.Tests
 
             // Assert
 
-            var expectedClaims = new Dictionary<string, string>
+            var expectedClaims = JObject.Parse(@"
             {
-                {"sub", "1234567890"},
-                {"name", "John Doe"},
-                {"iat", "1516239022"}
-            };
+                'sub': '1234567890',
+                'name': 'John Doe',
+                'iat': 1516239022
+            }
+            ");
 
             Assert.Equal(expectedClaims, actualClaims);
         }
 
         [Fact]
-        public void GivenAudIsArray_WhenGetClaims_ThenReturnClaims()
+        public void GivenAudIsArrayOfString_WhenGetClaims_ThenReturnClaims()
         {
             // Arrange
 
@@ -85,16 +85,39 @@ namespace DotNet.Decode.Jwt.Tests
 
             // Assert
 
-            var expectedClaims = new Dictionary<string, string>
+            var expectedClaims = JObject.Parse(@"
             {
-                {"aud", "[\"audience-one\",\"audience-two\"]"}
-            };
+                'aud': ['audience-one','audience-two']
+            }
+            ");
 
             Assert.Equal(expectedClaims, actualClaims);
         }
 
         [Fact]
-        public void GiveSob_WhenGetClaims_ThenReturnClaims()
+        public void GivenAudIsSingleString_WhenGetClaims_ThenReturnClaims()
+        {
+            // Arrange
+
+            const string jwt = "eyJhbGciOiJub25lIn0.eyJhdWQiOiJhdWRpZW5jZSJ9.";
+
+            // Act
+
+            var actualClaims = JwtClaimsDecoder.GetClaims(jwt);
+
+            // Assert
+
+            var expectedClaims = JObject.Parse(@"
+            {
+                'aud': 'audience'
+            }
+            ");
+
+            Assert.Equal(expectedClaims, actualClaims);
+        }
+
+        [Fact]
+        public void GivenClaimKeyIsXmlNamespace_WhenGetClaims_ThenReturnClaims()
         {
             // Arrange
 
@@ -106,10 +129,11 @@ namespace DotNet.Decode.Jwt.Tests
 
             // Assert
 
-            var expectedClaims = new Dictionary<string, string>
+            var expectedClaims = JObject.Parse(@"
             {
-                {"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "hi@me.com"}
-            };
+                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress': 'hi@me.com'
+            }
+            ");
 
             Assert.Equal(expectedClaims, actualClaims);
         }

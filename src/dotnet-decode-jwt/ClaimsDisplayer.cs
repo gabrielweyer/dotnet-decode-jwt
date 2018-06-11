@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DotNet.Decode.Jwt
 {
@@ -15,7 +16,7 @@ namespace DotNet.Decode.Jwt
             _console = console;
         }
 
-        public void DisplayClaims(IDictionary<string, string> claims)
+        public void DisplayClaims(JObject claims)
         {
             try
             {
@@ -29,31 +30,14 @@ namespace DotNet.Decode.Jwt
                     _console.ForegroundColor = ConsoleColor.Green;
                     _console.WriteLine("Claims are:");
                     _console.ResetColor();
-                    _console.WriteLine("{");
 
-                    var fieldSeparator = ",";
-                    var index = 1;
-
-                    foreach (var claim in claims)
-                    {
-                        if (index == claims.Count) { fieldSeparator = string.Empty; }
-
-                        _console.WriteLine($"\t\"{claim.Key}\": {GetFormattedValue(claim.Key, claim.Value)}{fieldSeparator}");
-                        index++;
-                    }
-
-                    _console.WriteLine("}");
+                    _console.WriteLine(JsonConvert.SerializeObject(claims, Formatting.Indented));
                 }
             }
             finally
             {
                 _console.ResetColor();
             }
-        }
-
-        private static string GetFormattedValue(string key, string value)
-        {
-            return DateClaims.Contains(key) || value[0] == '[' ? value : $"\"{value}\"";
         }
     }
 }
