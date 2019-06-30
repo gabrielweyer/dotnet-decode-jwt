@@ -43,7 +43,7 @@ deploy:
     api_key:
       # Encrypted `NuGet.org` token - https://www.nuget.org/account/ApiKeys
       # https://www.appveyor.com/docs/deployment/nuget/#provider-settings
-      secure: YS/bc6NmimYsND4J/0ePfjCdzHPir7SWdMGfL8oFJ2LMrzrhqvNYYYlStfJKtcmF
+      secure: wGfXd/ibazgmrlQfitG/oR7hWN28/A+ncq/MTFkqW2wO8YkT1/p48pm3XOCkIvHT
     skip_symbols: false
     symbol_server: https://nuget.smbsrc.net/
     artifact: packages
@@ -61,17 +61,6 @@ deploy:
     prerelease: true
     on:
       branch: /features\/.+/
-  - provider: NuGet
-    server: https://www.myget.org/F/gabrielweyer-pre-release/api/v2/package
-    api_key:
-      # Encrypted `MyGet` token - https://www.myget.org/profile/Me#!/AccessTokens
-      # https://www.appveyor.com/docs/deployment/nuget/#provider-settings
-      secure: Mw3OOYIQt9LVVJ+STxrwec8mEB+OSQX1ba3zccnm05MvvBiceV4C09N++rgplgtB
-    skip_symbols: false
-    symbol_server: https://www.myget.org/F/gabrielweyer-pre-release/symbols/api/v2/package
-    artifact: packages
-    on:
-      branch: /features\/.+/
 # Environment variables
 environment:
   # No need to pre-warm the `NuGet` cache
@@ -83,4 +72,4 @@ install:
   # The `SDK` is required to restore, build, publish... a `.NET Core` application
   # https://www.microsoft.com/net/download/windows
   - ps: .\setup\dotnet-install.ps1 -Channel Current
-  - ps: dotnet tool install --global Cake.Tool --version 0.31.0
+  - ps: dotnet tool install --global Cake.Tool --version 0.33.0

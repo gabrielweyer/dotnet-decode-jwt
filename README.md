@@ -2,9 +2,9 @@
 
 `.NET Core` [global tool][dotnet-global-tools] to decode `JSON Web Token` claims.
 
-| Package | Release | Pre-release |
-| --- | --- | --- |
-| `dotnet-decode-jwt` | [![NuGet][nuget-tool-badge]][nuget-tool-command] | [![MyGet][myget-tool-badge]][myget-tool-command] |
+| Package | Release |
+| - | - |
+| `dotnet-decode-jwt` | [![NuGet][nuget-tool-badge]][nuget-tool-command] |
 
 | CI | Status | Platform(s) | Framework(s) |
 | --- | --- | --- | --- |
@@ -51,8 +51,6 @@ Claims are:
 
 [nuget-tool-badge]: https://img.shields.io/nuget/v/dotnet-decode-jwt.svg?label=NuGet&style=flat-square
 [nuget-tool-command]: https://www.nuget.org/packages/dotnet-decode-jwt
-[myget-tool-badge]: https://img.shields.io/myget/gabrielweyer-pre-release/v/dotnet-decode-jwt.svg?label=MyGet&style=flat-square
-[myget-tool-command]: https://www.myget.org/feed/gabrielweyer-pre-release/package/nuget/dotnet-decode-jwt
 [app-veyor]: https://ci.appveyor.com/project/GabrielWeyer/dotnet-decode-jwt
 [app-veyor-shield]: https://img.shields.io/appveyor/ci/gabrielweyer/dotnet-decode-jwt/master.svg?label=AppVeyor&style=flat-square
 [dotnet-global-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools
