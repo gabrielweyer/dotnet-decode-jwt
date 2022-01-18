@@ -8,7 +8,7 @@
 
 | CI | Status | Platform(s) | Framework(s) |
 | --- | --- | --- | --- |
-| [AppVeyor][app-veyor] | [![Build Status][app-veyor-shield]][app-veyor] | `Windows` | `netcoreapp3.1.0` |
+| [AppVeyor][app-veyor] | [![Build Status][app-veyor-shield]][app-veyor] | `Windows` | `netcoreapp3.1.0`, `net6.0` |
 
 ![Sample output](docs/sample-output.png)
 
@@ -52,5 +52,5 @@ Claims are:
 [nuget-tool-badge]: https://img.shields.io/nuget/v/dotnet-decode-jwt.svg?label=NuGet&style=flat-square
 [nuget-tool-command]: https://www.nuget.org/packages/dotnet-decode-jwt
 [app-veyor]: https://ci.appveyor.com/project/GabrielWeyer/dotnet-decode-jwt
-[app-veyor-shield]: https://img.shields.io/appveyor/ci/gabrielweyer/dotnet-decode-jwt/master.svg?label=AppVeyor&style=flat-square
+[app-veyor-shield]: https://img.shields.io/appveyor/ci/gabrielweyer/dotnet-decode-jwt/main.svg?label=AppVeyor&style=flat-square
 [dotnet-global-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools
