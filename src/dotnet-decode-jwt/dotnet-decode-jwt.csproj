@@ -10,6 +10,7 @@
     <PackageTags>JWT</PackageTags>
     <PackageProjectUrl>https://github.com/gabrielweyer/dotnet-decode-jwt</PackageProjectUrl>
     <Copyright>Copyright © Decode JWT contributors</Copyright>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
