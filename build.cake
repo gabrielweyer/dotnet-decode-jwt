@@ -1,6 +1,4 @@
-#module nuget:?package=Cake.DotNetTool.Module&version=0.4.0
-
-#tool dotnet:?package=GitVersion.Tool&version=5.1.3
+#tool dotnet:?package=GitVersion.Tool&version=5.8.1
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -16,19 +14,19 @@ var solutionPath = "./dotnet-decode-jwt.sln";
 Task("Clean")
     .Does(() =>
     {
-        var settings = new DotNetCoreCleanSettings
+        var settings = new DotNetCleanSettings
         {
             Configuration = configuration
         };
 
-        DotNetCoreClean(solutionPath, settings);
+        DotNetClean(solutionPath, settings);
     });
 
 Task("Restore")
     .IsDependentOn("Clean")
     .Does(() =>
     {
-        DotNetCoreRestore();
+        DotNetRestore();
     });
 
 Task("SemVer")
@@ -56,19 +54,19 @@ Task("Build")
     .IsDependentOn("SetAppVeyorVersion")
     .Does(() =>
     {
-        var settings = new DotNetCoreBuildSettings
+        var settings = new DotNetBuildSettings
         {
             Configuration = configuration,
             NoIncremental = true,
             NoRestore = true,
-            MSBuildSettings = new DotNetCoreMSBuildSettings()
+            MSBuildSettings = new DotNetMSBuildSettings()
                 .SetVersion(assemblyVersion)
                 .WithProperty("FileVersion", packageVersion)
                 .WithProperty("InformationalVersion", packageVersion)
                 .WithProperty("nowarn", "7035")
         };
 
-        DotNetCoreBuild(solutionPath, settings);
+        DotNetBuild(solutionPath, settings);
     });
 
 
@@ -76,7 +74,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
     {
-        var settings = new DotNetCoreTestSettings
+        var settings = new DotNetTestSettings
         {
             Configuration = configuration,
             NoBuild = true
@@ -84,7 +82,7 @@ Task("Test")
 
         GetFiles("./tests/*/*-tests.csproj")
             .ToList()
-            .ForEach(f => DotNetCoreTest(f.FullPath, settings));
+            .ForEach(f => DotNetTest(f.FullPath, settings));
     });
 
 Task("Pack")
@@ -92,20 +90,20 @@ Task("Pack")
     .WithCriteria(() => HasArgument("pack"))
     .Does(() =>
     {
-        var settings = new DotNetCorePackSettings
+        var settings = new DotNetPackSettings
         {
             Configuration = configuration,
             NoBuild = true,
             NoRestore = true,
             IncludeSymbols = true,
             OutputDirectory = packagesDir,
-            MSBuildSettings = new DotNetCoreMSBuildSettings()
+            MSBuildSettings = new DotNetMSBuildSettings()
                 .WithProperty("PackageVersion", packageVersion)
         };
 
         GetFiles("./src/*/*.csproj")
             .ToList()
-            .ForEach(f => DotNetCorePack(f.FullPath, settings));
+            .ForEach(f => DotNetPack(f.FullPath, settings));
     });
 
 Task("PublishAppVeyorArtifacts")

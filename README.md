@@ -8,7 +8,7 @@
 
 | CI | Status | Platform(s) | Framework(s) |
 | --- | --- | --- | --- |
-| [AppVeyor][app-veyor] | [![Build Status][app-veyor-shield]][app-veyor] | `Windows` | `netcoreapp3.1.0` |
+| [AppVeyor][app-veyor] | [![Build Status][app-veyor-shield]][app-veyor] | `Windows` | `netcoreapp3.1.0`, `net6.0` |
 
 ![Sample output](docs/sample-output.png)
 
