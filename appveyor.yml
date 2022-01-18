@@ -4,8 +4,6 @@ init:
 branches:
   only:
     - main
-    # We'll also build whenever there is a new commit on any branch starting with `features/`
-    - /features\/.+/
 build_script:
   - ps: |
       dotnet cake build.cake --bootstrap
@@ -24,43 +22,6 @@ skip_commits:
     - LICENSE
     - README.md
     - docs/*
-deploy:
-  # The provider is case sensitive
-  - provider: GitHub
-    # By convention release versions start with `v`
-    release: v$(APPVEYOR_BUILD_VERSION)
-    auth_token:
-      # Encrypted `GitHub` `PAT`
-      # https://www.appveyor.com/docs/deployment/github/#provider-settings
-      secure: AmCNluoUjQddLCZrNghd0XjLwFhrofDMF7UTdmJDLuK5g/+FKGfBr6IOIbN3hrRw
-    artifact: transform,packages
-    draft: false
-    prerelease: false
-    on:
-      branch: main
-  - provider: NuGet
-    server: https://www.nuget.org/api/v2/package
-    api_key:
-      # Encrypted `NuGet.org` token - https://www.nuget.org/account/ApiKeys
-      # https://www.appveyor.com/docs/deployment/nuget/#provider-settings
-      secure: wGfXd/ibazgmrlQfitG/oR7hWN28/A+ncq/MTFkqW2wO8YkT1/p48pm3XOCkIvHT
-    skip_symbols: false
-    symbol_server: https://nuget.smbsrc.net/
-    artifact: packages
-    on:
-      branch: main
-  - provider: GitHub
-    # By convention release versions start with `v`
-    release: v$(APPVEYOR_BUILD_VERSION)
-    auth_token:
-      # Encrypted `GitHub` `PAT`
-      # https://www.appveyor.com/docs/deployment/github/#provider-settings
-      secure: AmCNluoUjQddLCZrNghd0XjLwFhrofDMF7UTdmJDLuK5g/+FKGfBr6IOIbN3hrRw
-    artifact: transform,packages
-    draft: false
-    prerelease: true
-    on:
-      branch: /features\/.+/
 # Environment variables
 environment:
   # No need to pre-warm the `NuGet` cache
@@ -72,3 +33,43 @@ install:
   # https://www.microsoft.com/net/download/windows
   - ps: .\setup\dotnet-install.ps1 -Channel Current -InstallDir 'C:\Program Files\dotnet\'
   - ps: dotnet tool restore
+for:
+-
+  branches:
+    except:
+      - main
+  deploy:
+    - provider: GitHub
+      # By convention release versions start with `v`
+      release: v$(APPVEYOR_BUILD_VERSION)
+      auth_token:
+        # Encrypted `GitHub` `PAT`
+        # https://www.appveyor.com/docs/deployment/github/#provider-settings
+        secure: AmCNluoUjQddLCZrNghd0XjLwFhrofDMF7UTdmJDLuK5g/+FKGfBr6IOIbN3hrRw
+      artifact: transform,packages
+      draft: false
+      prerelease: true
+-
+  branches:
+    only:
+      - main
+  deploy:
+    - provider: GitHub
+      # By convention release versions start with `v`
+      release: v$(APPVEYOR_BUILD_VERSION)
+      auth_token:
+        # Encrypted `GitHub` `PAT`
+        # https://www.appveyor.com/docs/deployment/github/#provider-settings
+        secure: AmCNluoUjQddLCZrNghd0XjLwFhrofDMF7UTdmJDLuK5g/+FKGfBr6IOIbN3hrRw
+      artifact: transform,packages
+      draft: false
+      prerelease: false
+    - provider: NuGet
+      server: https://www.nuget.org/api/v2/package
+      api_key:
+        # Encrypted `NuGet.org` token - https://www.nuget.org/account/ApiKeys
+        # https://www.appveyor.com/docs/deployment/nuget/#provider-settings
+        secure: wGfXd/ibazgmrlQfitG/oR7hWN28/A+ncq/MTFkqW2wO8YkT1/p48pm3XOCkIvHT
+      skip_symbols: false
+      symbol_server: https://nuget.smbsrc.net/
+      artifact: packages
