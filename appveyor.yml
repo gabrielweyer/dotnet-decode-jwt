@@ -71,5 +71,5 @@ for:
         # https://www.appveyor.com/docs/deployment/nuget/#provider-settings
         secure: TcV2BC6PH+wTkgn+wXMJ4152K798oPZg196YGqNN5ZzYl9XRcFHK+kp/pkbiBC1J
       skip_symbols: false
-      symbol_server: https://nuget.smbsrc.net/
+      symbol_server: https://www.nuget.org/api/v2/symbolpackage
       artifact: packages
