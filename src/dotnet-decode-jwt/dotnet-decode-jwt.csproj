@@ -13,6 +13,7 @@
     <PackageDescription>Decode a JSON Web Token claims.</PackageDescription>
     <PackageTags>JWT</PackageTags>
     <PackageProjectUrl>https://github.com/gabrielweyer/dotnet-decode-jwt</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright © Decode JWT contributors</Copyright>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
