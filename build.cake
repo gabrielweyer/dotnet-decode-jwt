@@ -1,4 +1,4 @@
-#tool dotnet:?package=GitVersion.Tool&version=5.8.1
+#tool dotnet:?package=GitVersion.Tool&version=5.8.2
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
