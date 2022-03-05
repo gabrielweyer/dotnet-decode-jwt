@@ -1,14 +1,14 @@
 # Decode JWT
 
-`.NET Core` [global tool][dotnet-global-tools] to decode `JSON Web Token` claims.
+`.NET` [global tool][dotnet-global-tools] to decode `JSON Web Token` claims.
 
 | Package | Release |
 | - | - |
-| `dotnet-decode-jwt` | [![NuGet][nuget-tool-badge]][nuget-tool-command] |
+| `dotnet-decode-jwt` | [![NuGet][nuget-package-badge]][nuget-package-command] |
 
 | CI | Status | Platform(s) | Framework(s) |
 | --- | --- | --- | --- |
-| [AppVeyor][app-veyor] | [![Build Status][app-veyor-shield]][app-veyor] | `Windows` | `netcoreapp3.1.0`, `net6.0` |
+| [GitHub][github-actions] | [![Build Status][github-actions-shield]][github-actions] | `Ubuntu` | `netcoreapp3.1`, `net6.0` |
 
 ![Sample output](docs/sample-output.png)
 
@@ -49,8 +49,8 @@ Claims are:
 }
 ````
 
-[nuget-tool-badge]: https://img.shields.io/nuget/v/dotnet-decode-jwt.svg?label=NuGet&style=flat-square
-[nuget-tool-command]: https://www.nuget.org/packages/dotnet-decode-jwt
-[app-veyor]: https://ci.appveyor.com/project/GabrielWeyer/dotnet-decode-jwt
-[app-veyor-shield]: https://img.shields.io/appveyor/ci/gabrielweyer/dotnet-decode-jwt/main.svg?label=AppVeyor&style=flat-square
+[nuget-package-badge]: https://img.shields.io/nuget/v/dotnet-decode-jwt.svg?label=NuGet&style=flat-square
+[nuget-package-command]: https://www.nuget.org/packages/dotnet-decode-jwt
 [dotnet-global-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools
+[github-actions]: https://github.com/gabrielweyer/dotnet-decode-jwt/actions/workflows/build.yml
+[github-actions-shield]: https://github.com/gabrielweyer/dotnet-decode-jwt/actions/workflows/build.yml/badge.svg
