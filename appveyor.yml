@@ -46,7 +46,7 @@ for:
         # Encrypted `GitHub` `PAT`
         # https://www.appveyor.com/docs/deployment/github/#provider-settings
         secure: XM4FoPiy2XjubFQwXRD6xcUxHHnx2URaeMlrwRF4gcgA/obNTO/TjUXiv7yUMiNH
-      artifact: transform,packages
+      artifact: packages
       draft: false
       prerelease: true
 -
@@ -61,7 +61,7 @@ for:
         # Encrypted `GitHub` `PAT`
         # https://www.appveyor.com/docs/deployment/github/#provider-settings
         secure: XM4FoPiy2XjubFQwXRD6xcUxHHnx2URaeMlrwRF4gcgA/obNTO/TjUXiv7yUMiNH
-      artifact: transform,packages
+      artifact: packages
       draft: false
       prerelease: false
     - provider: NuGet
