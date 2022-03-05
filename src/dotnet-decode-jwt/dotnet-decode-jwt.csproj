@@ -4,6 +4,8 @@
     <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'True'">true</ContinuousIntegrationBuild>
     <RootNamespace>DotNet.Decode.Jwt</RootNamespace>
     <PackAsTool>true</PackAsTool>
     <PackageId>dotnet-decode-jwt</PackageId>
@@ -12,9 +14,15 @@
     <PackageTags>JWT</PackageTags>
     <PackageProjectUrl>https://github.com/gabrielweyer/dotnet-decode-jwt</PackageProjectUrl>
     <Copyright>Copyright © Decode JWT contributors</Copyright>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>
