@@ -1,29 +1,26 @@
-﻿using System;
+﻿namespace DotNet.Decode.Jwt;
 
-namespace DotNet.Decode.Jwt
+public interface IConsole
 {
-    public interface IConsole
+    ConsoleColor ForegroundColor { set; }
+    void WriteLine(string value);
+    void ResetColor();
+}
+
+class SimplifiedConsole : IConsole
+{
+    public ConsoleColor ForegroundColor
     {
-        ConsoleColor ForegroundColor { set; }
-        void WriteLine(string value);
-        void ResetColor();
+        set => Console.ForegroundColor = value;
     }
 
-    class SimplifiedConsole : IConsole
+    public void WriteLine(string value)
     {
-        public ConsoleColor ForegroundColor
-        {
-            set => Console.ForegroundColor = value;
-        }
+        Console.WriteLine(value);
+    }
 
-        public void WriteLine(string value)
-        {
-            Console.WriteLine(value);
-        }
-
-        public void ResetColor()
-        {
-            Console.ResetColor();
-        }
+    public void ResetColor()
+    {
+        Console.ResetColor();
     }
 }
