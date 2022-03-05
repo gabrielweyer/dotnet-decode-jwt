@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Runtime.InteropServices;
 using FluentAssertions;
 
 namespace DotNet.Decode.Jwt.Tests;
@@ -8,12 +9,26 @@ public class ClaimsDisplayerTests
     private readonly ClaimsDisplayer _target;
 
     private readonly MockConsole _console;
+    private readonly string _timeZoneDisplayName;
 
     public ClaimsDisplayerTests()
     {
         _console = new MockConsole();
+        var timeZoneIdentifier = "Australia/Melbourne";
 
-        _target = new ClaimsDisplayer(_console, TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time"));
+#if NETCOREAPP3_1
+        _timeZoneDisplayName = "Australian Eastern Standard Time";
+#else
+        _timeZoneDisplayName = "Australian Eastern Time (Melbourne)";
+#endif
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            timeZoneIdentifier = "AUS Eastern Standard Time";
+            _timeZoneDisplayName = "Canberra, Melbourne, Sydney";
+        }
+
+        _target = new ClaimsDisplayer(_console, TimeZoneInfo.FindSystemTimeZoneById(timeZoneIdentifier));
     }
 
     static ClaimsDisplayerTests()
@@ -28,15 +43,12 @@ public class ClaimsDisplayerTests
     public void GivenNoClaim_WhenDisplayClaims_ThenMessage()
     {
         // Arrange
-
         var claims = new JObject();
 
         // Act
-
         _target.DisplayClaims(claims);
 
         // Assert
-
         var expected = new List<string>
         {
             "SET FOREGROUND COLOR: DarkGray",
@@ -51,7 +63,6 @@ public class ClaimsDisplayerTests
     public void GivenAnyClaim_WhenDisplayClaims_ThenDisplayClaims()
     {
         // Arrange
-
         var claims = JObject.Parse(@"
             {
                 'iat': 1516239022
@@ -59,24 +70,22 @@ public class ClaimsDisplayerTests
             ");
 
         // Act
-
         _target.DisplayClaims(claims);
 
         // Assert
-
         var expected = new List<string>
         {
             "WRITE: ",
             "SET FOREGROUND COLOR: Yellow",
             "WRITE: Expiration Time (exp): N/A",
             "WRITE: Not Before (nbf): N/A",
-            "WRITE: Issued At (iat): Thursday, 18 January 2018 01:30:22 UTC / Thursday, 18 January 2018 12:30:22 (UTC+10:00) Canberra, Melbourne, Sydney",
+            $"WRITE: Issued At (iat): Thursday, 18 January 2018 01:30:22 UTC / Thursday, 18 January 2018 12:30:22 (UTC+10:00) {_timeZoneDisplayName}",
             "SET FOREGROUND COLOR: Green",
             "WRITE: ",
             "WRITE: Claims are:",
             "WRITE: ",
             "RESET COLOR",
-            "WRITE: {\r\n  \"iat\": 1516239022\r\n}",
+            $"WRITE: {{{Environment.NewLine}  \"iat\": 1516239022{Environment.NewLine}}}",
             "RESET COLOR"
         };
 
