@@ -2,22 +2,6 @@
 
 `.NET` [global tool][dotnet-global-tools] to decode `JSON Web Token` claims.
 
-| Package | Release |
-| - | - |
-| `dotnet-decode-jwt` | [![NuGet][nuget-package-badge]][nuget-package-command] |
-
-| CI | Status | Platform(s) | Framework(s) |
-| --- | --- | --- | --- |
-| [GitHub][github-actions] | [![Build Status][github-actions-shield]][github-actions] | `Ubuntu` | `netcoreapp3.1`, `net6.0` |
-
-![Sample output](docs/sample-output.png)
-
-## Installation
-
-```posh
-> dotnet tool install -g dotnet-decode-jwt
-```
-
 ## Usage
 
 ```powershell
@@ -49,8 +33,9 @@ Claims are:
 }
 ```
 
-[nuget-package-badge]: https://img.shields.io/nuget/v/dotnet-decode-jwt.svg?label=NuGet&style=flat-square
-[nuget-package-command]: https://www.nuget.org/packages/dotnet-decode-jwt
+## Release notes
+
+Release notes can be found on [GitHub][release-notes].
+
 [dotnet-global-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools
-[github-actions]: https://github.com/gabrielweyer/dotnet-decode-jwt/actions/workflows/build.yml
-[github-actions-shield]: https://github.com/gabrielweyer/dotnet-decode-jwt/actions/workflows/build.yml/badge.svg
+[release-notes]: https://github.com/gabrielweyer/dotnet-decode-jwt/releases
