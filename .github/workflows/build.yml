@@ -59,4 +59,4 @@ jobs:
           gh release create v${{ env.PACKAGE_VERSION }} --title v${{ env.PACKAGE_VERSION }} ./artifacts/packages/* --target ${{ github.sha }} --repo ${{ github.repository }} --notes-file empty-release-notes.txt --prerelease
       - name: Push NuGet package on main branch
         if: ${{ github.ref_name == 'main' }}
-        run: dotnet nuget push ./artifacts/packages/ --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./artifacts/packages/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
