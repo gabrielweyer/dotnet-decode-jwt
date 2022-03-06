@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Text.Encodings.Web;
 
 namespace DotNet.Decode.Jwt;
 
@@ -13,6 +12,11 @@ public class ClaimsDisplayer
     private const string IssuedAtKeyName = "iat";
 
     private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    private static readonly JsonSerializerOptions SerializationOptions = new JsonSerializerOptions
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        WriteIndented = true
+    };
 
     public ClaimsDisplayer(IConsole console, TimeZoneInfo localTimeZone)
     {
@@ -20,11 +24,11 @@ public class ClaimsDisplayer
         _localTimeZone = localTimeZone;
     }
 
-    public void DisplayClaims(JObject claims)
+    public void DisplayClaims(JsonElement claims)
     {
         try
         {
-            if (claims.Count == 0)
+            if (claims.ValueKind == JsonValueKind.Undefined)
             {
                 _console.ForegroundColor = ConsoleColor.DarkGray;
                 _console.WriteLine("There was no claims in the JWT.");
@@ -42,7 +46,7 @@ public class ClaimsDisplayer
                 _console.WriteLine(string.Empty);
                 _console.ResetColor();
 
-                _console.WriteLine(JsonConvert.SerializeObject(claims, Formatting.Indented));
+                _console.WriteLine(JsonSerializer.Serialize(claims, SerializationOptions));
             }
         }
         finally
@@ -51,11 +55,17 @@ public class ClaimsDisplayer
         }
     }
 
-    private string FormatDateTime(JObject claims, string key)
+    private string FormatDateTime(JsonElement claims, string key)
     {
-        if (!claims.TryGetValue(key, out var token)) return "N/A";
+        if (!claims.TryGetProperty(key, out var token))
+        {
+            return "N/A";
+        }
 
-        var timestamp = token.Value<int>();
+        if (token.ValueKind != JsonValueKind.Number || !token.TryGetInt32(out var timestamp))
+        {
+            return "N/A";
+        }
 
         var utcTime = Epoch.AddSeconds(timestamp);
 

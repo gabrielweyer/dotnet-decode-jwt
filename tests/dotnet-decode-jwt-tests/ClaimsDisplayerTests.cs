@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Runtime.InteropServices;
-using FluentAssertions;
 
 namespace DotNet.Decode.Jwt.Tests;
 
@@ -43,7 +42,7 @@ public class ClaimsDisplayerTests
     public void GivenNoClaim_WhenDisplayClaims_ThenMessage()
     {
         // Arrange
-        var claims = new JObject();
+        var claims = new JsonElement();
 
         // Act
         _target.DisplayClaims(claims);
@@ -63,14 +62,10 @@ public class ClaimsDisplayerTests
     public void GivenAnyClaim_WhenDisplayClaims_ThenDisplayClaims()
     {
         // Arrange
-        var claims = JObject.Parse(@"
-            {
-                'iat': 1516239022
-            }
-            ");
+        var claims = JsonDocument.Parse(@"{""iat"":1516239022}");
 
         // Act
-        _target.DisplayClaims(claims);
+        _target.DisplayClaims(claims.RootElement);
 
         // Assert
         var expected = new List<string>
@@ -86,6 +81,64 @@ public class ClaimsDisplayerTests
             "WRITE: ",
             "RESET COLOR",
             $"WRITE: {{{Environment.NewLine}  \"iat\": 1516239022{Environment.NewLine}}}",
+            "RESET COLOR"
+        };
+
+        _console.Actions.Should().BeEquivalentTo(expected);
+    }
+
+    [Fact]
+    public void GivenIatIsNotTimestamp_WhenDisplayClaims_ThenDisplayDateAsNotAvailable()
+    {
+        // Arrange
+        var claims = JsonDocument.Parse(@"{""iat"":""hello""}");
+
+        // Act
+        _target.DisplayClaims(claims.RootElement);
+
+        // Assert
+        var expected = new List<string>
+        {
+            "WRITE: ",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Expiration Time (exp): N/A",
+            "WRITE: Not Before (nbf): N/A",
+            "WRITE: Issued At (iat): N/A",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: ",
+            "WRITE: Claims are:",
+            "WRITE: ",
+            "RESET COLOR",
+            $"WRITE: {{{Environment.NewLine}  \"iat\": \"hello\"{Environment.NewLine}}}",
+            "RESET COLOR"
+        };
+
+        _console.Actions.Should().BeEquivalentTo(expected);
+    }
+
+    [Fact]
+    public void GivenHtmlSensitiveCharacter_WhenDisplayClaims_ThenDoNotEscape()
+    {
+        // Arrange
+        var claims = JsonDocument.Parse(@"{""hi"":""I'm""}");
+
+        // Act
+        _target.DisplayClaims(claims.RootElement);
+
+        // Assert
+        var expected = new List<string>
+        {
+            "WRITE: ",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Expiration Time (exp): N/A",
+            "WRITE: Not Before (nbf): N/A",
+            "WRITE: Issued At (iat): N/A",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: ",
+            "WRITE: Claims are:",
+            "WRITE: ",
+            "RESET COLOR",
+            $"WRITE: {{{Environment.NewLine}  \"hi\": \"I'm\"{Environment.NewLine}}}",
             "RESET COLOR"
         };
 

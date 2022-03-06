@@ -1,21 +1,18 @@
-﻿using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-namespace DotNet.Decode.Jwt;
+﻿namespace DotNet.Decode.Jwt;
 
 public static class JwtClaimsDecoder
 {
-    public static JObject GetClaims(string jwt)
+    public static JsonElement GetClaims(string jwt)
     {
         var base64UrlClaimsSet = GetBase64UrlClaimsSet(jwt);
         var claimsSet = DecodeBase64Url(base64UrlClaimsSet);
 
         try
         {
-            return JObject.Parse(claimsSet);
+            using var jsonDocument = JsonDocument.Parse(claimsSet);
+            return jsonDocument.RootElement.Clone();
         }
-        catch (JsonReaderException e)
+        catch (Exception e)
         {
             throw new FormatException(e.Message, e);
         }

@@ -48,15 +48,10 @@ public class JwtClaimsDecoderTests
         var actualClaims = JwtClaimsDecoder.GetClaims(jwt);
 
         // Assert
-        var expectedClaims = JObject.Parse(@"
-            {
-                'sub': '1234567890',
-                'name': 'John Doe',
-                'iat': 1516239022
-            }
-            ");
+        var expectedClaims =
+            JsonDocument.Parse(@"{""sub"":""1234567890"",""name"":""John Doe"",""iat"":1516239022}");
 
-        Assert.Equal(expectedClaims, actualClaims);
+        actualClaims.GetRawText().Should().Be(expectedClaims.RootElement.GetRawText());
     }
 
     [Fact]
@@ -69,13 +64,9 @@ public class JwtClaimsDecoderTests
         var actualClaims = JwtClaimsDecoder.GetClaims(jwt);
 
         // Assert
-        var expectedClaims = JObject.Parse(@"
-            {
-                'aud': ['audience-one','audience-two']
-            }
-            ");
+        var expectedClaims = JsonDocument.Parse(@"{""aud"":[""audience-one"",""audience-two""]}");
 
-        Assert.Equal(expectedClaims, actualClaims);
+        actualClaims.GetRawText().Should().Be(expectedClaims.RootElement.GetRawText());
     }
 
     [Fact]
@@ -88,31 +79,39 @@ public class JwtClaimsDecoderTests
         var actualClaims = JwtClaimsDecoder.GetClaims(jwt);
 
         // Assert
-        var expectedClaims = JObject.Parse(@"
-            {
-                'aud': 'audience'
-            }
-            ");
+        var expectedClaims = JsonDocument.Parse(@"{""aud"":""audience""}");
 
-        Assert.Equal(expectedClaims, actualClaims);
+        actualClaims.GetRawText().Should().Be(expectedClaims.RootElement.GetRawText());
+    }
+
+    [Fact]
+    public void GivenHtmlSensitiveCharacter_WhenGetClaims_ThenReturnUnescapedClaims()
+    {
+        // Arrange
+        const string jwt = "eyJhbGciOiJub25lIn0.eyJoaSI6IkknbSJ9.";
+
+        // Act
+        var actualClaims = JwtClaimsDecoder.GetClaims(jwt);
+
+        // Assert
+        var expectedClaims = JsonDocument.Parse(@"{""hi"":""I'm""}");
+
+        actualClaims.GetRawText().Should().Be(expectedClaims.RootElement.GetRawText());
     }
 
     [Fact]
     public void GivenClaimKeyIsXmlNamespace_WhenGetClaims_ThenReturnClaims()
     {
         // Arrange
-        const string jwt = "eyJhbGciOiJub25lIn0.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiAiaGlAbWUuY29tIn0=.";
+        const string jwt = "eyJhbGciOiJub25lIn0.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJoaUBtZS5jb20ifQ==.";
 
         // Act
         var actualClaims = JwtClaimsDecoder.GetClaims(jwt);
 
         // Assert
-        var expectedClaims = JObject.Parse(@"
-            {
-                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress': 'hi@me.com'
-            }
-            ");
+        var expectedClaims = JsonDocument.Parse(
+            @"{""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"":""hi@me.com""}");
 
-        Assert.Equal(expectedClaims, actualClaims);
+        actualClaims.GetRawText().Should().Be(expectedClaims.RootElement.GetRawText());
     }
 }
