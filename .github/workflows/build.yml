@@ -25,7 +25,8 @@ jobs:
       IS_FEATURE_PULL_REQUEST: ${{ github.event_name == 'pull_request' && startsWith(github.head_ref, 'features/') }}
       CREATE_PRERELEASE: 'false'
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Install latest .NET SDK
