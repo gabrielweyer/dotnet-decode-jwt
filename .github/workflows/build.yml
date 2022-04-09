@@ -55,19 +55,19 @@ jobs:
           path: 'artifacts/test-results/*.trx'
           reporter: dotnet-trx
       - name: Create GitHub release on main branch
-        if: ${{ github.ref_name == 'main' }}
+        if: ${{ env.CREATE_RELEASE == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           touch empty-release-notes.txt
           gh release create v${{ env.PACKAGE_VERSION }} --title v${{ env.PACKAGE_VERSION }} ./artifacts/packages/* --target ${{ github.sha }} --repo ${{ github.repository }} --notes-file empty-release-notes.txt
       - name: Create GitHub prerelease on features branches
-        if: ${{ startsWith(github.ref_name, 'features/') }}
+        if: ${{ env.CREATE_PRERELEASE == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           touch empty-release-notes.txt
           gh release create v${{ env.PACKAGE_VERSION }} --title v${{ env.PACKAGE_VERSION }} ./artifacts/packages/* --target ${{ github.sha }} --repo ${{ github.repository }} --notes-file empty-release-notes.txt --prerelease
       - name: Push NuGet package on main branch
-        if: ${{ github.ref_name == 'main' }}
+        if: ${{ env.CREATE_RELEASE == 'true' }}
         run: dotnet nuget push ./artifacts/packages/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
