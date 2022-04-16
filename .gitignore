@@ -1,14 +1,13 @@
 # Rider
-
 .idea/
 *.DotSettings.user
 
 # Compilation detritus
-
 obj/
 bin/
 
-# Cake
-
-tools/*
+# Build
 artifacts/
+
+# NUKE
+.nuke/temp/
