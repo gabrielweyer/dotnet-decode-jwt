@@ -47,7 +47,14 @@ jobs:
         with:
           name: tests-results
           path: ./artifacts/test-results/*.trx
+          if-no-files-found: error
         if: ${{ always() }}
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: tests-results
+          path: ./artifacts/coverage
+          if-no-files-found: error
       - name: Report test results
         uses: dorny/test-reporter@v1.5.0
         continue-on-error: true

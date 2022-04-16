@@ -1,3 +1,4 @@
+#tool "nuget:?package=ReportGenerator&version=5.1.4"
 #tool dotnet:?package=GitVersion.Tool&version=5.8.2
 #addin nuget:?package=Cake.Incubator&version=7.0.0
 
@@ -10,6 +11,7 @@ var packageVersion = "1.0.0";
 var artifactsDir = MakeAbsolute(Directory("artifacts"));
 var packagesDir = artifactsDir.Combine(Directory("packages"));
 var testResultsDir = artifactsDir.Combine(Directory("test-results"));
+var coverageReportDir = artifactsDir.Combine(Directory("coverage"));
 
 var solutionPath = "./dotnet-decode-jwt.sln";
 
@@ -24,6 +26,7 @@ Task("Clean")
         };
 
         DotNetClean(solutionPath, settings);
+        CleanDirectory(artifactsDir);
     });
 
 Task("Restore")
@@ -101,22 +104,32 @@ Task("Test")
         {
             Configuration = configuration,
             NoBuild = true,
-            Framework = testProject.FrameworkVersion
+            Framework = testProject.FrameworkVersion,
+            ResultsDirectory = testResultsDir
         };
-
-        if (GitHubActions.IsRunningOnGitHubActions)
-        {
-            var trxTestResultsFile = testResultsDir
-                .Combine($"{testProject.AssemblyName}.{testProject.FrameworkVersion}.trx");
-            settings.Loggers.Add($"\"trx;LogFileName={trxTestResultsFile}\"");
-        }
+        settings.Collectors.Add("XPlat Code Coverage");
+        var trxTestResultsFile = testResultsDir
+            .Combine($"{testProject.AssemblyName}.{testProject.FrameworkVersion}.trx");
+        settings.Loggers.Add($"\"trx;LogFileName={trxTestResultsFile}\"");
 
         DotNetTest(testProject.FullPath, settings);
     })
     .DeferOnError();
 
-Task("Pack")
+Task("Coverage")
     .IsDependentOn("Test")
+    .Does(() =>
+    {
+        var settings = new ReportGeneratorSettings();
+        settings.ReportTypes.Add(ReportGeneratorReportType.Html);
+
+        var inputDir = new GlobPattern($"{testResultsDir}/**/coverage.cobertura.xml");
+
+        ReportGenerator(inputDir, coverageReportDir, settings);
+    });
+
+Task("Pack")
+    .IsDependentOn("Coverage")
     .WithCriteria(() => HasArgument("pack"))
     .Does(() =>
     {
