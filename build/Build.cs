@@ -86,8 +86,15 @@ class Build : NukeBuild
                 .EnableNoIncremental());
         });
 
-    Target Test => _ => _
+    Target VerifyFormat => _ => _
         .DependsOn(Compile)
+        .Executes(() =>
+        {
+            DotNet("format --verify-no-changes");
+        });
+
+    Target Test => _ => _
+        .DependsOn(VerifyFormat)
         .Executes(() =>
         {
             var testProjects =
