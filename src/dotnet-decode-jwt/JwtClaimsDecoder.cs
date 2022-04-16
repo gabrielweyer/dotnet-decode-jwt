@@ -1,4 +1,4 @@
-﻿namespace DotNet.Decode.Jwt;
+namespace DotNet.Decode.Jwt;
 
 public static class JwtClaimsDecoder
 {

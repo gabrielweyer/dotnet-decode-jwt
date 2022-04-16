@@ -1,4 +1,4 @@
-﻿namespace DotNet.Decode.Jwt;
+namespace DotNet.Decode.Jwt;
 
 public interface IConsole
 {
@@ -7,7 +7,7 @@ public interface IConsole
     void ResetColor();
 }
 
-class SimplifiedConsole : IConsole
+internal class SimplifiedConsole : IConsole
 {
     public ConsoleColor ForegroundColor
     {

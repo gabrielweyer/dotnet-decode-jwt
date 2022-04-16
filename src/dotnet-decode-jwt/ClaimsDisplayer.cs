@@ -1,4 +1,4 @@
-﻿using System.Text.Encodings.Web;
+using System.Text.Encodings.Web;
 
 namespace DotNet.Decode.Jwt;
 
@@ -11,8 +11,8 @@ public class ClaimsDisplayer
     private const string NotBeforeKeyName = "nbf";
     private const string IssuedAtKeyName = "iat";
 
-    private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-    private static readonly JsonSerializerOptions SerializationOptions = new JsonSerializerOptions
+    private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    private static readonly JsonSerializerOptions _serializationOptions = new JsonSerializerOptions
     {
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         WriteIndented = true
@@ -46,7 +46,7 @@ public class ClaimsDisplayer
                 _console.WriteLine(string.Empty);
                 _console.ResetColor();
 
-                _console.WriteLine(JsonSerializer.Serialize(claims, SerializationOptions));
+                _console.WriteLine(JsonSerializer.Serialize(claims, _serializationOptions));
             }
         }
         finally
@@ -67,7 +67,7 @@ public class ClaimsDisplayer
             return "N/A";
         }
 
-        var utcTime = Epoch.AddSeconds(timestamp);
+        var utcTime = _epoch.AddSeconds(timestamp);
 
         var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, _localTimeZone);
 
