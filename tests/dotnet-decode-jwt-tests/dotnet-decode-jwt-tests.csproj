@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>DotNet.Decode.Jwt.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
+    <NoWarn>CS7035</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Using Include="FluentAssertions" />

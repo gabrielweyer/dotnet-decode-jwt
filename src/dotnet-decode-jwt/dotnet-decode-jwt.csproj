@@ -18,6 +18,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <NoWarn>CS7035</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Using Include="System.Text" />

@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2D23523A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-decode-jwt-tests", "tests\dotnet-decode-jwt-tests\dotnet-decode-jwt-tests.csproj", "{8309B1A9-B0E2-475D-B513-2D1B61A6BD04}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{EDF94C9D-AAFD-49A4-A050-760A730C85B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDF94C9D-AAFD-49A4-A050-760A730C85B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF94C9D-AAFD-49A4-A050-760A730C85B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9633B22D-A3EC-42B7-BC30-376C7B6B3CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9633B22D-A3EC-42B7-BC30-376C7B6B3CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9633B22D-A3EC-42B7-BC30-376C7B6B3CD8}.Debug|x64.ActiveCfg = Debug|Any CPU
