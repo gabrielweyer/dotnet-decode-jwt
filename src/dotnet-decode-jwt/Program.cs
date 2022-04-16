@@ -1,8 +1,8 @@
-﻿namespace DotNet.Decode.Jwt;
+namespace DotNet.Decode.Jwt;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         if (args.Length != 1)
         {
