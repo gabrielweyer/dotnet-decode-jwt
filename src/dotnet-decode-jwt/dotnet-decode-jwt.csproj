@@ -21,6 +21,9 @@
     <NoWarn>CS7035</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="Gabo.DotNet.DecodeJwt.Tests" />
+  </ItemGroup>
+  <ItemGroup>
     <Using Include="System.Text" />
     <Using Include="System.Text.Json" />
   </ItemGroup>

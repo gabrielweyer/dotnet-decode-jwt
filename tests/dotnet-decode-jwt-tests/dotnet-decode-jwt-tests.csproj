@@ -4,6 +4,7 @@
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Gabo.DotNet.DecodeJwt.Tests</RootNamespace>
+    <AssemblyName>Gabo.DotNet.DecodeJwt.Tests</AssemblyName>
     <IsPackable>false</IsPackable>
     <NoWarn>CS7035</NoWarn>
   </PropertyGroup>
