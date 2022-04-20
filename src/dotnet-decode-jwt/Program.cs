@@ -1,4 +1,4 @@
-namespace DotNet.Decode.Jwt;
+namespace Gabo.DotNet.DecodeJwt;
 
 internal class Program
 {

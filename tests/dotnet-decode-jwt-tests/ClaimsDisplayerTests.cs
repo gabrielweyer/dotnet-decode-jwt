@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace DotNet.Decode.Jwt.Tests;
+namespace Gabo.DotNet.DecodeJwt.Tests;
 
 public class ClaimsDisplayerTests
 {

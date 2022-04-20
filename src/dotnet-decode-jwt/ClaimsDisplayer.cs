@@ -1,6 +1,6 @@
 using System.Text.Encodings.Web;
 
-namespace DotNet.Decode.Jwt;
+namespace Gabo.DotNet.DecodeJwt;
 
 public class ClaimsDisplayer
 {

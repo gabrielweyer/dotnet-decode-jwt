@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'True'">true</ContinuousIntegrationBuild>
-    <RootNamespace>DotNet.Decode.Jwt</RootNamespace>
+    <RootNamespace>Gabo.DotNet.DecodeJwt</RootNamespace>
     <PackAsTool>true</PackAsTool>
     <PackageId>dotnet-decode-jwt</PackageId>
     <Authors>Gabriel Weyer</Authors>
