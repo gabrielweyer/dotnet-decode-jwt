@@ -3,12 +3,15 @@
     <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>DotNet.Decode.Jwt.Tests</RootNamespace>
+    <RootNamespace>Gabo.DotNet.DecodeJwt.Tests</RootNamespace>
+    <AssemblyName>Gabo.DotNet.DecodeJwt.Tests</AssemblyName>
     <IsPackable>false</IsPackable>
     <NoWarn>CS7035</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Using Include="FluentAssertions" />
+    <Using Include="Gabo.DotNet.DecodeJwt" />
+    <Using Include="Gabo.DotNet.DecodeJwt.Tests.TestInfrastructure" />
     <Using Include="System.Text.Json" />
     <Using Include="Xunit" />
   </ItemGroup>
