@@ -26,32 +26,20 @@ public class ClaimsDisplayer
 
     public void DisplayClaims(JsonElement claims)
     {
-        try
+        if (claims.ValueKind == JsonValueKind.Undefined)
         {
-            if (claims.ValueKind == JsonValueKind.Undefined)
-            {
-                _console.ForegroundColor = ConsoleColor.DarkGray;
-                _console.WriteLine("There was no claims in the JWT.");
-            }
-            else
-            {
-                _console.WriteLine(string.Empty);
-                _console.ForegroundColor = ConsoleColor.Yellow;
-                _console.WriteLine($"Expiration Time ({ExpirationTimeKeyName}): {FormatDateTime(claims, ExpirationTimeKeyName)}");
-                _console.WriteLine($"Not Before ({NotBeforeKeyName}): {FormatDateTime(claims, NotBeforeKeyName)}");
-                _console.WriteLine($"Issued At ({IssuedAtKeyName}): {FormatDateTime(claims, IssuedAtKeyName)}");
-                _console.ForegroundColor = ConsoleColor.Green;
-                _console.WriteLine(string.Empty);
-                _console.WriteLine("Claims are:");
-                _console.WriteLine(string.Empty);
-                _console.ResetColor();
-
-                _console.WriteLine(JsonSerializer.Serialize(claims, _serializationOptions));
-            }
+            _console.WriteDullLine("There was no claims in the JWT.");
         }
-        finally
+        else
         {
-            _console.ResetColor();
+            _console.WriteBoringLine(string.Empty);
+            _console.WriteInfoLine($"Expiration Time ({ExpirationTimeKeyName}): {FormatDateTime(claims, ExpirationTimeKeyName)}");
+            _console.WriteInfoLine($"Not Before ({NotBeforeKeyName}): {FormatDateTime(claims, NotBeforeKeyName)}");
+            _console.WriteInfoLine($"Issued At ({IssuedAtKeyName}): {FormatDateTime(claims, IssuedAtKeyName)}");
+            _console.WriteFancyLine(string.Empty);
+            _console.WriteFancyLine("Claims are:");
+            _console.WriteFancyLine(string.Empty);
+            _console.WriteBoringLine(JsonSerializer.Serialize(claims, _serializationOptions));
         }
     }
 

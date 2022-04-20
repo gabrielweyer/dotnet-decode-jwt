@@ -11,6 +11,7 @@
   <ItemGroup>
     <Using Include="FluentAssertions" />
     <Using Include="Gabo.DotNet.DecodeJwt" />
+    <Using Include="Gabo.DotNet.DecodeJwt.Tests.TestInfrastructure" />
     <Using Include="System.Text.Json" />
     <Using Include="Xunit" />
   </ItemGroup>

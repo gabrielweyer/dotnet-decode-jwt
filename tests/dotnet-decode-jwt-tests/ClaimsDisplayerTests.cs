@@ -70,16 +70,28 @@ public class ClaimsDisplayerTests
         // Assert
         var expected = new List<string>
         {
-            "WRITE: ",
-            "SET FOREGROUND COLOR: Yellow",
-            "WRITE: Expiration Time (exp): N/A",
-            "WRITE: Not Before (nbf): N/A",
-            $"WRITE: Issued At (iat): Thursday, 18 January 2018 01:30:22 UTC / Thursday, 18 January 2018 12:30:22 (UTC+10:00) {_timeZoneDisplayName}",
-            "SET FOREGROUND COLOR: Green",
-            "WRITE: ",
-            "WRITE: Claims are:",
+            "SET FOREGROUND COLOR: Gray",
             "WRITE: ",
             "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Expiration Time (exp): N/A",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Not Before (nbf): N/A",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            $"WRITE: Issued At (iat): Thursday, 18 January 2018 01:30:22 UTC / Thursday, 18 January 2018 12:30:22 (UTC+10:00) {_timeZoneDisplayName}",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: ",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: Claims are:",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: ",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Gray",
             $"WRITE: {{{Environment.NewLine}  \"iat\": 1516239022{Environment.NewLine}}}",
             "RESET COLOR"
         };
@@ -99,16 +111,28 @@ public class ClaimsDisplayerTests
         // Assert
         var expected = new List<string>
         {
-            "WRITE: ",
-            "SET FOREGROUND COLOR: Yellow",
-            "WRITE: Expiration Time (exp): N/A",
-            "WRITE: Not Before (nbf): N/A",
-            "WRITE: Issued At (iat): N/A",
-            "SET FOREGROUND COLOR: Green",
-            "WRITE: ",
-            "WRITE: Claims are:",
+            "SET FOREGROUND COLOR: Gray",
             "WRITE: ",
             "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Expiration Time (exp): N/A",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Not Before (nbf): N/A",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Issued At (iat): N/A",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: ",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: Claims are:",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: ",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Gray",
             $"WRITE: {{{Environment.NewLine}  \"iat\": \"hello\"{Environment.NewLine}}}",
             "RESET COLOR"
         };
@@ -128,42 +152,32 @@ public class ClaimsDisplayerTests
         // Assert
         var expected = new List<string>
         {
-            "WRITE: ",
-            "SET FOREGROUND COLOR: Yellow",
-            "WRITE: Expiration Time (exp): N/A",
-            "WRITE: Not Before (nbf): N/A",
-            "WRITE: Issued At (iat): N/A",
-            "SET FOREGROUND COLOR: Green",
-            "WRITE: ",
-            "WRITE: Claims are:",
+            "SET FOREGROUND COLOR: Gray",
             "WRITE: ",
             "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Expiration Time (exp): N/A",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Not Before (nbf): N/A",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Yellow",
+            "WRITE: Issued At (iat): N/A",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: ",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: Claims are:",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Green",
+            "WRITE: ",
+            "RESET COLOR",
+            "SET FOREGROUND COLOR: Gray",
             $"WRITE: {{{Environment.NewLine}  \"hi\": \"I'm\"{Environment.NewLine}}}",
             "RESET COLOR"
         };
 
         _console.Actions.Should().BeEquivalentTo(expected);
-    }
-}
-
-internal class MockConsole : IConsole
-{
-    private readonly List<string> _actions = new List<string>();
-
-    public IReadOnlyList<string> Actions => _actions;
-
-    public ConsoleColor ForegroundColor
-    {
-        set => _actions.Add($"SET FOREGROUND COLOR: {value}");
-    }
-
-    public void WriteLine(string value)
-    {
-        _actions.Add($"WRITE: {value}");
-    }
-
-    public void ResetColor()
-    {
-        _actions.Add("RESET COLOR");
     }
 }

@@ -5,17 +5,20 @@ internal static class Program
     internal const int SuccessExitCode = 0;
     internal const int FailureExitCode = 1;
 
+    internal static IConsole AbstractedConsole;
+
     internal static int Main(string[] args)
     {
+        AbstractedConsole ??= new NonThreadSafeConsole();
+
         if (args.Length != 1)
         {
-            Console.WriteLine("A single argument should be provided:");
-            Console.WriteLine("dotnet decode-jwt eyJhbGciOiJub25lIn0.ewogICAgImlzcyI6ICJiZXN0LWlzc3VlciIsCiAgICAic3ViIjogIm5pY2Utc3ViamVjdCIsCiAgICAiYXVkIjogWyJhdWRpZW5jZS1vbmUiLCAiYXVkaWVuY2UtdHdvIl0sCiAgICAiZXhwIjogMTUyODY5MTM1MCwKICAgICJuYmYiOiAxNTI4NjkwNzUwLAogICAgImlhdCI6IDE1Mjg2OTA3NTAsCiAgICAianRpIjogImMzMTk3ZGNiLWUxMTMtNDc3OC04OTc5LWI5NTZmNjg0MDA3ZiIsCiAgICAiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjogImhpQG1lLmNvbSIsCiAgICAic29tZS1udW1iZXIiOiAxMi41NiwKICAgICJuZXN0ZWQtY2xhaW0iOiB7CiAgICAgICAgImhpIjogIkknbSIsCiAgICAgICAgImEiOiAibmVzdGVkIGNsYWltIgogICAgfQp9Cg==.");
+            AbstractedConsole.WriteBoringLine("A single argument should be provided:");
+            AbstractedConsole.WriteBoringLine("dotnet decode-jwt eyJhbGciOiJub25lIn0.ewogICAgImlzcyI6ICJiZXN0LWlzc3VlciIsCiAgICAic3ViIjogIm5pY2Utc3ViamVjdCIsCiAgICAiYXVkIjogWyJhdWRpZW5jZS1vbmUiLCAiYXVkaWVuY2UtdHdvIl0sCiAgICAiZXhwIjogMTUyODY5MTM1MCwKICAgICJuYmYiOiAxNTI4NjkwNzUwLAogICAgImlhdCI6IDE1Mjg2OTA3NTAsCiAgICAianRpIjogImMzMTk3ZGNiLWUxMTMtNDc3OC04OTc5LWI5NTZmNjg0MDA3ZiIsCiAgICAiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjogImhpQG1lLmNvbSIsCiAgICAic29tZS1udW1iZXIiOiAxMi41NiwKICAgICJuZXN0ZWQtY2xhaW0iOiB7CiAgICAgICAgImhpIjogIkknbSIsCiAgICAgICAgImEiOiAibmVzdGVkIGNsYWltIgogICAgfQp9Cg==.");
             return FailureExitCode;
         }
 
-        var console = new SimplifiedConsole();
-        var claimsDisplayer = new ClaimsDisplayer(console, TimeZoneInfo.Local);
+        var claimsDisplayer = new ClaimsDisplayer(AbstractedConsole, TimeZoneInfo.Local);
 
         try
         {
@@ -25,13 +28,8 @@ internal static class Program
         }
         catch (FormatException e)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(e.Message);
+            AbstractedConsole.WriteErrorLine(e.Message);
             return FailureExitCode;
-        }
-        finally
-        {
-            Console.ResetColor();
         }
     }
 }
