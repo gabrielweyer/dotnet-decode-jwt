@@ -4,6 +4,9 @@ on:
     branches:
       - main
     paths-ignore:
+      - .github/workflows/security-scanning-csharp.yml
+      - .github/workflows/skipped-build.yml
+      - .github/dependabot.yml
       - 'docs/**'
       - .editorconfig
       - LICENSE
@@ -12,6 +15,9 @@ on:
     branches:
       - main
     paths-ignore:
+      - .github/workflows/security-scanning-csharp.yml
+      - .github/workflows/skipped-build.yml
+      - .github/dependabot.yml
       - 'docs/**'
       - .editorconfig
       - LICENSE
