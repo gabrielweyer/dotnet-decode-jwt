@@ -3,6 +3,7 @@
     <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <RootNamespace>Gabo.DotNet.DecodeJwt.Tests</RootNamespace>
     <AssemblyName>Gabo.DotNet.DecodeJwt.Tests</AssemblyName>
     <IsPackable>false</IsPackable>

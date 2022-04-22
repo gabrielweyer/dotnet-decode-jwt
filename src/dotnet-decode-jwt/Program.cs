@@ -5,7 +5,7 @@ internal static class Program
     internal const int SuccessExitCode = 0;
     internal const int FailureExitCode = 1;
 
-    internal static IConsole AbstractedConsole;
+    internal static IConsole? AbstractedConsole;
 
     internal static int Main(string[] args)
     {

@@ -4,6 +4,7 @@
     <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'True'">true</ContinuousIntegrationBuild>
     <RootNamespace>Gabo.DotNet.DecodeJwt</RootNamespace>
