@@ -7,6 +7,7 @@ on:
       - .github/workflows/security-scanning-csharp.yml
       - .github/workflows/skipped-build.yml
       - .github/dependabot.yml
+      - '.vscode/**'
       - 'docs/**'
       - .editorconfig
       - LICENSE
@@ -18,6 +19,7 @@ on:
       - .github/workflows/security-scanning-csharp.yml
       - .github/workflows/skipped-build.yml
       - .github/dependabot.yml
+      - '.vscode/**'
       - 'docs/**'
       - .editorconfig
       - LICENSE

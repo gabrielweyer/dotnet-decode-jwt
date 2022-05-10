@@ -9,6 +9,9 @@ on:
       - .github/workflows/skipped-build.yml
       - .github/CODEOWNERS
       - .github/dependabot.yml
+      - '.vscode/**'
+      - 'docs/**'
+      - .editorconfig
       - LICENSE
       - README.md
   schedule:
