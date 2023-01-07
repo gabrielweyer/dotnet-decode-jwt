@@ -2,9 +2,9 @@ using Gabo.DotNet.DecodeJwt.Infrastructure;
 
 namespace Gabo.DotNet.DecodeJwt.Tests.TestInfrastructure;
 
-internal class MockConsole : IConsole
+internal sealed class MockConsole : IConsole
 {
-    private readonly List<string> _actions = new List<string>();
+    private readonly List<string> _actions = new();
 
     public IReadOnlyList<string> Actions => _actions;
 

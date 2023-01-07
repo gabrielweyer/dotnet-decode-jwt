@@ -7,7 +7,7 @@
     <RootNamespace>Gabo.DotNet.DecodeJwt.Tests</RootNamespace>
     <AssemblyName>Gabo.DotNet.DecodeJwt.Tests</AssemblyName>
     <IsPackable>false</IsPackable>
-    <NoWarn>CS7035</NoWarn>
+    <NoWarn>CS7035;CA1707</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Using Include="FluentAssertions" />
