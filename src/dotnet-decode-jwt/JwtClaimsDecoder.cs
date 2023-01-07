@@ -1,6 +1,6 @@
 namespace Gabo.DotNet.DecodeJwt;
 
-public static class JwtClaimsDecoder
+internal static class JwtClaimsDecoder
 {
     public static JsonElement GetClaims(string jwt)
     {
@@ -20,7 +20,7 @@ public static class JwtClaimsDecoder
 
     private static string GetBase64UrlClaimsSet(string jwt)
     {
-        var firstDotIndex = jwt.IndexOf('.');
+        var firstDotIndex = jwt.IndexOf('.', StringComparison.Ordinal);
         var lastDotIndex = jwt.LastIndexOf('.');
 
         if (firstDotIndex == -1 || lastDotIndex <= firstDotIndex)
