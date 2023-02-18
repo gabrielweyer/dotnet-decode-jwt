@@ -137,6 +137,7 @@ sealed class Build : NukeBuild
         .Executes(() =>
         {
             DotNetPack(s => s
+                .SetProject(SourceDirectory / "dotnet-decode-jwt")
                 .SetConfiguration(Configuration)
                 .EnableNoBuild()
                 .EnableIncludeSymbols()
