@@ -11,3 +11,6 @@ artifacts/
 
 # NUKE
 .nuke/temp/
+
+# Git
+*.orig
