@@ -6,9 +6,9 @@
 | ------------------- | ------------------------------------------------------ |
 | `dotnet-decode-jwt` | [![NuGet][nuget-package-badge]][nuget-package-command] |
 
-| CI                       | Status                                                   | Platform(s) | Framework(s)              |
-| ------------------------ | -------------------------------------------------------- | ----------- | ------------------------- |
-| [GitHub][github-actions] | [![Build Status][github-actions-shield]][github-actions] | `Ubuntu`    | `netcoreapp3.1`, `net6.0` |
+| CI                       | Status                                                   | Platform(s) | Framework(s) |
+| ------------------------ | -------------------------------------------------------- | ----------- | ------------ |
+| [GitHub][github-actions] | [![Build Status][github-actions-shield]][github-actions] | `Ubuntu`    | `net6.0`     |
 
 ![Sample output](docs/sample-output.png)
 
