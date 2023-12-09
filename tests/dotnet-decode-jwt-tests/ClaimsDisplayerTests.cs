@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Runtime.InteropServices;
 
 namespace Gabo.DotNet.DecodeJwt.Tests;
 
@@ -21,7 +20,7 @@ public class ClaimsDisplayerTests
         _timeZoneDisplayName = "Australian Eastern Time (Melbourne)";
 #endif
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        if (OperatingSystem.IsWindows())
         {
             timeZoneIdentifier = "AUS Eastern Standard Time";
             _timeZoneDisplayName = "Canberra, Melbourne, Sydney";
