@@ -13,12 +13,7 @@ public class ClaimsDisplayerTests
     {
         _console = new MockConsole();
         var timeZoneIdentifier = "Australia/Melbourne";
-
-#if NETCOREAPP3_1
-        _timeZoneDisplayName = "Australian Eastern Standard Time";
-#else
-        _timeZoneDisplayName = "Australian Eastern Time (Melbourne)";
-#endif
+        _timeZoneDisplayName = "Eastern Australia Time (Melbourne)";
 
         if (OperatingSystem.IsWindows())
         {
@@ -31,7 +26,7 @@ public class ClaimsDisplayerTests
 
     static ClaimsDisplayerTests()
     {
-        var cultureInfo = new CultureInfo("en-AU");
+        var cultureInfo = new CultureInfo("en-US");
 
         CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
         CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
@@ -79,7 +74,7 @@ public class ClaimsDisplayerTests
             "WRITE: Not Before (nbf): N/A",
             "RESET COLOR",
             "SET FOREGROUND COLOR: Yellow",
-            $"WRITE: Issued At (iat): Thursday, 18 January 2018 01:30:22 UTC / Thursday, 18 January 2018 12:30:22 (UTC+10:00) {_timeZoneDisplayName}",
+            $"WRITE: Issued At (iat): Thursday, January 18, 2018 01:30:22 UTC / Thursday, January 18, 2018 12:30:22 (UTC+10:00) {_timeZoneDisplayName}",
             "RESET COLOR",
             "SET FOREGROUND COLOR: Green",
             "WRITE: ",
