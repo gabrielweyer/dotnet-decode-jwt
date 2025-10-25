@@ -1,6 +1,6 @@
 namespace Gabo.DotNet.DecodeJwt.Infrastructure;
 
-public interface IConsole
+internal interface IConsole
 {
     void WriteBoringLine(string value);
     void WriteDullLine(string value);
