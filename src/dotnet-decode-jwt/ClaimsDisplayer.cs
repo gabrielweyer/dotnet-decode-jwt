@@ -2,7 +2,7 @@ using System.Text.Encodings.Web;
 
 namespace Gabo.DotNet.DecodeJwt;
 
-public class ClaimsDisplayer
+internal class ClaimsDisplayer
 {
     private readonly IConsole _console;
     private readonly TimeZoneInfo _localTimeZone;
