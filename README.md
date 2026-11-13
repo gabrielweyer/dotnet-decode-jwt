@@ -8,7 +8,7 @@
 
 | CI                       | Status                                                   | Platform(s) | Framework(s) |
 | ------------------------ | -------------------------------------------------------- | ----------- | ------------ |
-| [GitHub][github-actions] | [![Build Status][github-actions-shield]][github-actions] | `Ubuntu`    | `net8.0`     |
+| [GitHub][github-actions] | [![Build Status][github-actions-shield]][github-actions] | `Ubuntu`    | `net10.0`    |
 
 ![Sample output](docs/sample-output.png)
 
