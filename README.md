@@ -49,6 +49,10 @@ Claims are:
 }
 ```
 
+## Developing
+
+See [DEVELOPING.md](DEVELOPING.md) for how to build locally and how to release a new version.
+
 [nuget-package-badge]: https://img.shields.io/nuget/v/dotnet-decode-jwt.svg?label=NuGet&style=flat-square
 [nuget-package-command]: https://www.nuget.org/packages/dotnet-decode-jwt
 [dotnet-global-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools
