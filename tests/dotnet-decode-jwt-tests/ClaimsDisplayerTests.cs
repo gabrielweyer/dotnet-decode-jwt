@@ -12,16 +12,14 @@ public class ClaimsDisplayerTests
     public ClaimsDisplayerTests()
     {
         _console = new MockConsole();
-        var timeZoneIdentifier = "Australia/Melbourne";
-        _timeZoneDisplayName = "Eastern Australia Time (Melbourne)";
+        var timeZoneIdentifier = OperatingSystem.IsWindows() ? "AUS Eastern Standard Time" : "Australia/Melbourne";
+        var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneIdentifier);
 
-        if (OperatingSystem.IsWindows())
-        {
-            timeZoneIdentifier = "AUS Eastern Standard Time";
-            _timeZoneDisplayName = "Canberra, Melbourne, Sydney";
-        }
+        // The display name comes from the OS (Windows registry or ICU on Linux) and changes between versions
+        // (e.g. "Eastern Australia Time (Melbourne)" became "Australian Eastern Time (Melbourne)" in Ubuntu 26.04).
+        _timeZoneDisplayName = timeZone.DisplayName;
 
-        _target = new ClaimsDisplayer(_console, TimeZoneInfo.FindSystemTimeZoneById(timeZoneIdentifier));
+        _target = new ClaimsDisplayer(_console, timeZone);
     }
 
     static ClaimsDisplayerTests()
@@ -74,7 +72,7 @@ public class ClaimsDisplayerTests
             "WRITE: Not Before (nbf): N/A",
             "RESET COLOR",
             "SET FOREGROUND COLOR: Yellow",
-            $"WRITE: Issued At (iat): Thursday, January 18, 2018 01:30:22 UTC / Thursday, January 18, 2018 12:30:22 (UTC+10:00) {_timeZoneDisplayName}",
+            $"WRITE: Issued At (iat): Thursday, January 18, 2018 01:30:22 UTC / Thursday, January 18, 2018 12:30:22 {_timeZoneDisplayName}",
             "RESET COLOR",
             "SET FOREGROUND COLOR: Green",
             "WRITE: ",
